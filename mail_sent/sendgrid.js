@@ -13,7 +13,7 @@ const mail_model = require('./model/mail_model.js');
 const mongoose = require('mongoose');
 var PORT = 4000;
 app.post('/createmail', (req, res) => {
-	if (req.body.to && !!req.body.subject && !!req.body.body && !!req.body.scheduling_date && !!req.body.scheduling_time) {
+	if (!!req.body.to && !!req.body.subject && !!req.body.body && !!req.body.scheduling_date && !!req.body.scheduling_time) {
 		arr = [];
 		arr.push(req.body)
 		mail_model.insertMany(arr)
@@ -30,7 +30,7 @@ app.post('/createmail', (req, res) => {
 	}
 });
 app.post('/readmail', (req, res) => {
-	if (!!req.body) {
+	if (Object.keys(req.body).length!=0) {
 		mail_model.find(req.body).exec(function(err, docs) {
 			res.status(200).json({
 				status: 1,
@@ -49,7 +49,7 @@ app.post('/readmail', (req, res) => {
 	}
 });
 app.post('/updatemail', (req, res) => {
-	if (!!req.body) {
+	if (Object.keys(req.body).length!=0) {
 		const connectDB = async () => {
 			await mail_model.updateMany(req.body.fix, {
 				$set: req.body.set
@@ -68,7 +68,7 @@ app.post('/updatemail', (req, res) => {
 	}
 })
 app.post('/deletemail', (req, res) => {
-	if (!!req.body) {
+	if (Object.keys(req.body).length!=0) {
 		mail_model.deleteMany(req.body).exec(function(err, docs) {
 			res.status(200).json({
 				status: 1,
