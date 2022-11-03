@@ -1,2 +1,0 @@
-# SendgridMailSend
-mailsendingapi's
